@@ -49,10 +49,9 @@ public class User {
     @Column(name = "hourly_rate")
     private Double hourlyRate;
 
-    @ElementCollection
-    @CollectionTable(name = "user_skills", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "skill")
-    private Set<String> skills = new HashSet<>();
+    // One-to-Many relationship with UserSkill
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<UserSkill> userSkills = new HashSet<>();
 
     @Column(name = "service_areas", length = 500)
     private String serviceAreas;

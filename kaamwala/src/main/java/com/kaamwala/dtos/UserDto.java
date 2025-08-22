@@ -54,7 +54,7 @@ public class UserDto {
     @Max(value = 5000, message = "Hourly rate cannot exceed ₹5000")
     private Double hourlyRate;
 
-    private Set<String> skills;
+    private Set<UserSkillDto> userSkills;
 
     @Size(max = 500, message = "Service areas cannot exceed 500 characters")
     private String serviceAreas;

@@ -57,7 +57,7 @@ public class UserServiceImp implements UserService {
         if ("worker".equals(userDto.getRole())) {
             if (userDto.getExperience() == null) userDto.setExperience(0);
             if (userDto.getHourlyRate() == null) userDto.setHourlyRate(100.0);
-            if (userDto.getSkills() == null) userDto.setSkills(new HashSet<>());
+            if (userDto.getUserSkills() == null) userDto.setUserSkills(new HashSet<>());
             if (userDto.getServiceAreas() == null) userDto.setServiceAreas("");
         }
 
@@ -132,7 +132,8 @@ public class UserServiceImp implements UserService {
         user.setRole(userDto.getRole());
         user.setExperience(userDto.getExperience());
         user.setHourlyRate(userDto.getHourlyRate());
-        user.setSkills(userDto.getSkills());
+        // Note: UserSkills are handled separately through UserSkill management APIs
+        // user.setUserSkills(userDto.getUserSkills()); // This would require proper UserSkill entity mapping
         user.setServiceAreas(userDto.getServiceAreas());
         user.setPreferredLocation(userDto.getPreferredLocation());
 
@@ -168,11 +169,6 @@ public class UserServiceImp implements UserService {
                 .collect(Collectors.toList());
     }
 
-    //  NEW: Add method to get workers by skills
-    public List<UserDto> getWorkersBySkills(List<String> skills) {
-        List<User> workers = userRepository.findByRoleAndSkillsIn("worker", skills);
-        return workers.stream()
-                .map(user -> mapper.map(user, UserDto.class))
-                .collect(Collectors.toList());
-    }
+    // Note: Worker search functionality is now handled by WorkerSearchController
+    // which uses the new Category/SubCategory system for better skill management
 }
